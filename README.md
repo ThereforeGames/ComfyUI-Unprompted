@@ -1,4 +1,4 @@
-https://github.com/ThereforeGames/ComfyUI-Unprompted/demo.mp4
+https://github.com/ThereforeGames/ComfyUI-Unprompted/assets/95403634/613c3c0f-5066-41c5-8aea-042afd1c7d47
 
 This is a ComfyUI node that processes your input text with the Unprompted templating language. Early alpha release.
 
