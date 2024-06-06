@@ -48,6 +48,7 @@ class UnpromptedNode:
 		The entry point method. The name of this method must be the same as the value of property `FUNCTION`.
 		For example, if `FUNCTION = "execute"` then this method's name must be `execute`, if `FUNCTION = "foo"` then it must be `foo`.
 	"""
+
 	def __init__(self):
 		pass
 
@@ -72,6 +73,9 @@ class UnpromptedNode:
 		        "string_suffix": ("STRING", {
 		            "forceInput": True
 		        }),
+		        "always_rerun": ("BOOLEAN", {
+		            "default": False
+		        }),
 		    }
 		}
 
@@ -84,9 +88,8 @@ class UnpromptedNode:
 
 	# CATEGORY = "Example"
 
-	def do_unprompted(self, string_field, string_prefix="", string_suffix=""):
+	def do_unprompted(self, string_field, string_prefix="", string_suffix="", always_rerun=False):
 		Unprompted.shortcode_user_vars = {}
-		# TODO: We may want to declare our own log level for the result message
 		result = Unprompted.start(string_prefix + string_field + string_suffix)
 		# Cleanup routines
 		Unprompted.cleanup()
@@ -102,9 +105,12 @@ class UnpromptedNode:
 		This method is used in the core repo for the LoadImage node where they return the image hash as a string, if the image hash
 		changes between executions the LoadImage node is executed again.
 	"""
+
 	#@classmethod
-	#def IS_CHANGED(s, image, string_field, int_field, float_field, print_to_screen):
-	#    return ""
+	def IS_CHANGED(string_field, string_prefix="", string_suffix="", always_rerun=False):
+		if always_rerun:
+			import time
+			return str(time.time())
 
 
 # Set the web directory, any .js file in that directory will be loaded by the frontend as a frontend extension
