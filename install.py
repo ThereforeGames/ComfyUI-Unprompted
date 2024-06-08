@@ -75,9 +75,9 @@ requirements = os.path.join(this_path, "requirements.txt")
 with open(requirements) as file:
 	for package in file:
 		try:
-			package_with_comment = package.split("#", 1)
-			package = package_with_comment[0].strip()
-			reason = package_with_comment[1].strip()
+			# package_with_comment = package.split("#", 1)
+			# package = package_with_comment[0].strip()
+			# reason = package_with_comment[1].strip()
 
 			if "==" in package:
 				package_name, package_version = package.split("==")
@@ -92,5 +92,5 @@ with open(requirements) as file:
 				process_wrap(pip_install + [package])
 		except Exception as e:
 			print(e)
-			print(f"(ERROR) Failed to install {package} dependency for Unprompted - {reason} functions may not work")
+			print(f"(ERROR) Failed to install {package} dependency for Unprompted.")
 			pass
