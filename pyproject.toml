@@ -1,0 +1,15 @@
+[project]
+name = "comfyui-unprompted"
+description = "This is a ComfyUI node that processes your input text with the [a/Unprompted templating language](https://github.com/ThereforeGames/unprompted). Early alpha release.\n"
+version = "1.0.0"
+license = "LICENSE"
+dependencies = ["unprompted@git+https://github.com/ThereforeGames/unprompted", "opencv-python", "nltk", "pattern@git+https://github.com/NicolasBizzozzero/pattern"]
+
+[project.urls]
+Repository = "https://github.com/ThereforeGames/ComfyUI-Unprompted"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "ComfyUI-Unprompted"
+Icon = ""
