@@ -7,8 +7,8 @@ def do_install():
 
 do_install()
 
-# Main object
-import inspect, os, sys
+# Prep main object
+import inspect, os, sys, time
 import unprompted.lib_unprompted.shared
 
 module_path = os.path.dirname(os.path.dirname(inspect.getfile(unprompted.lib_unprompted.shared.Unprompted)))
@@ -17,6 +17,8 @@ module_path = os.path.dirname(os.path.dirname(inspect.getfile(unprompted.lib_unp
 sys.path.insert(0, f"{module_path}")
 
 Unprompted = unprompted.lib_unprompted.shared.Unprompted(module_path)
+Unprompted.webui = "comfy"
+Unprompted.NODE_VERSION = "0.2.0"
 
 
 class UnpromptedNode:
@@ -63,23 +65,37 @@ class UnpromptedNode:
 		            "STRING",
 		            {
 		                "multiline": True,  # True if you want the field to look like the one on the ClipTextEncode node
-		                "default": "Hello World!"
+		                "default": "This string will be parsed with the Unprompted language."
 		            }),
 		    },
 		    "optional": {
-		        "string_prefix": ("STRING", {
-		            "forceInput": True
+		        "anything": ("*", {
+		            "default": None
 		        }),
-		        "string_suffix": ("STRING", {
-		            "forceInput": True
+		        "set_anything_to": ("STRING", {
+		            "default": "comfy_var"
+		        }),
+		        "return_image_var": ("STRING", {
+		            "default": "comfy_var",
 		        }),
 		        "always_rerun": ("BOOLEAN", {
 		            "default": False
 		        }),
+		        "string_prefix": ("STRING", {
+		            "forceInput": True,
+		            "default": ""
+		        }),
+		        "string_suffix": ("STRING", {
+		            "forceInput": True,
+		            "default": ""
+		        }),
 		    }
 		}
 
-	RETURN_TYPES = ("STRING", )
+	RETURN_TYPES = (
+	    "STRING",
+	    "IMAGE",
+	)
 	#RETURN_NAMES = ("image_output_name",)
 
 	FUNCTION = "do_unprompted"
@@ -88,14 +104,28 @@ class UnpromptedNode:
 
 	# CATEGORY = "Example"
 
-	def do_unprompted(self, string_field, string_prefix="", string_suffix="", always_rerun=False):
+	def do_unprompted(self, **kwargs):
 		Unprompted.shortcode_user_vars = {}
-		result = Unprompted.start(string_prefix + string_field + string_suffix)
+
+		if kwargs.get("anything") is not None:
+			Unprompted.shortcode_user_vars[kwargs.get("set_anything_to")] = kwargs.get("anything")
+
+		result = Unprompted.start(kwargs.get("string_prefix", "") + kwargs.get("string_field", "") + kwargs.get("string_suffix", ""))
+
+		image_result = None
+		if kwargs.get("return_image_var"):
+			image_var = kwargs.get("return_image_var")
+			if image_var in Unprompted.shortcode_user_vars:
+				image_result = Unprompted.shortcode_user_vars[image_var]
+
 		# Cleanup routines
 		Unprompted.cleanup()
 		Unprompted.goodbye()
 
-		return (result, )
+		return (
+		    result,
+		    image_result,
+		)
 
 	"""
 		The node will always be re executed if any of the inputs change but
@@ -107,9 +137,8 @@ class UnpromptedNode:
 	"""
 
 	#@classmethod
-	def IS_CHANGED(string_field, string_prefix="", string_suffix="", always_rerun=False):
-		if always_rerun:
-			import time
+	def IS_CHANGED(**kwargs):
+		if kwargs.get("always_rerun") is True:
 			return str(time.time())
 
 
@@ -121,4 +150,4 @@ class UnpromptedNode:
 NODE_CLASS_MAPPINGS = {"Unprompted": UnpromptedNode}
 
 # A dictionary that contains the friendly/humanly readable titles for the nodes
-NODE_DISPLAY_NAME_MAPPINGS = {"Unprompted": f"Unprompted v{Unprompted.VERSION}"}
+NODE_DISPLAY_NAME_MAPPINGS = {"Unprompted": f"Unprompted v{Unprompted.NODE_VERSION}"}
