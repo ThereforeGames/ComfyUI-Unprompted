@@ -18,7 +18,7 @@ sys.path.insert(0, f"{module_path}")
 
 Unprompted = unprompted.lib_unprompted.shared.Unprompted(module_path)
 Unprompted.webui = "comfy"
-Unprompted.NODE_VERSION = "0.2.0"
+Unprompted.NODE_VERSION = "0.2.1"
 
 
 class UnpromptedNode:

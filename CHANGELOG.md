@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+<details open><summary>0.2.1 - 23 June 2024</summary>
+
+### Fixed
+- Resolved an issue with `install.py` package upgrade logic
+
+</details>
+
 <details open><summary>0.2.0 - 23 June 2024</summary>
 
 ### Added

@@ -1,4 +1,4 @@
-unprompted@git+https://github.com/ThereforeGames/unprompted
+unprompted@git+https://github.com/ThereforeGames/unprompted==11.1.0
 opencv-python
 nltk
 pattern@git+https://github.com/NicolasBizzozzero/pattern

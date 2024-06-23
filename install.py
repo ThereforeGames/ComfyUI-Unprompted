@@ -1,5 +1,6 @@
 print("### ComfyUI-Unprompted: Check dependencies")
 import os, re, threading, locale, subprocess, sys, pkg_resources
+from packaging import version
 
 this_path = os.path.dirname(os.path.realpath(__file__))
 debug = False
@@ -8,9 +9,9 @@ debug = False
 # (Why doesn't ComfyUI provide these functions natively?)
 
 if "python_embeded" in sys.executable or "python_embedded" in sys.executable:
-	pip_install = [sys.executable, "-s", "-m", "pip", "install"]
+	pip_install = [sys.executable, "-s", "-m", "pip", "install", "--upgrade"]
 else:
-	pip_install = [sys.executable, "-m", "pip", "install"]
+	pip_install = [sys.executable, "-m", "pip", "install", "--upgrade"]
 
 
 def handle_stream(stream, is_stdout):
@@ -60,7 +61,7 @@ def get_installed_packages():
 
 
 def is_installed(name):
-	name = name.strip().split('@')[0]  # Split the name at '@' and take the first part
+	name = name.strip().split("@")[0]  # Split the name at '@' and take the first part
 	pattern = r'([^<>!=]+)([<>!=]=?)'
 	match = re.search(pattern, name)
 
@@ -81,9 +82,13 @@ with open(requirements) as file:
 
 			if "==" in package:
 				package_name, package_version = package.split("==")
+				if "@" in package_name:
+					package = package_name
+					package_name = package_name.strip().split("@")[0]
 				try:
 					installed_version = pkg_resources.get_distribution(package_name).version
-					if installed_version != package_version:
+					if version.parse(installed_version) < version.parse(package_version):
+						print(f"Upgrading `{package_name}` from {installed_version} to {package_version}")
 						process_wrap(pip_install + [package])
 				except pkg_resources.DistributionNotFound:
 					# Package is not installed, install it
