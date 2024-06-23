@@ -26,4 +26,16 @@ The prefix is added to the beginning of the main `string_field` box, and the aff
 
 </details>
 
+<details><summary>How do I edit images with the Unprompted node?</summary>
 
+As of v0.2.0, you can use the `anything` input to pass an image to the Unprompted node. To test this, please try the following workflow:
+
+<img src="./examples/image_edit_workflow.png">
+
+Note the use of the `anything` input and the `set_anything_to` widget. We set the image to the `comfy_var` variable, which is then accessed via the `[image_edit]` shortcode:
+
+```
+[image_edit input="comfy_var" add_noise=500]
+```
+
+We also ensure that the `return_image_var` widget refers to `comfy_var` so that we can see our changes to the image in the Preview Image node.
