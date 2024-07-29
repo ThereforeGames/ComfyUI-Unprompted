@@ -1,7 +1,7 @@
 [project]
 name = "comfyui-unprompted"
 description = "A node that processes input text with the [a/Unprompted templating language](https://github.com/ThereforeGames/unprompted).\n"
-version = "0.2.1"
+version = "0.2.2"
 license = "LICENSE"
 dependencies = ["unprompted@git+https://github.com/ThereforeGames/unprompted", "opencv-python", "nltk", "pattern@git+https://github.com/NicolasBizzozzero/pattern"]
 
