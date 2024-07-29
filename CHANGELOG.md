@@ -1,14 +1,21 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-<details open><summary>0.2.1 - 23 June 2024</summary>
+<details><summary>0.2.2 - 29 July 2024</summary>
+
+### Added
+- Support Unprompted v11.2.0
+
+</details>
+
+<details><summary>0.2.1 - 23 June 2024</summary>
 
 ### Fixed
 - Resolved an issue with `install.py` package upgrade logic
 
 </details>
 
-<details open><summary>0.2.0 - 23 June 2024</summary>
+<details><summary>0.2.0 - 23 June 2024</summary>
 
 ### Added
 - New input `anything`: connect any node to this input (for example, an image) and it will be made accessible in your Unprompted string as a variable
