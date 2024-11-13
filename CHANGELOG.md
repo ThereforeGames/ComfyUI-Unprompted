@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+<details><summary>0.3.0 - 13 November 2024</summary>
+
+### Added
+- New node `Set Variable Rack`: Allows you to feed many inputs into custom Unprompted variables
+- New setting `goodbye_routines`: Runs Unprompted's memory-freeing methods, recommend enabling this on the final Unprompted node in your workflow
+
+### Fixed
+- Error related to the `anything` input in newer versions of ComfyUI
+
+</details>
+
 <details><summary>0.2.2 - 29 July 2024</summary>
 
 ### Added
